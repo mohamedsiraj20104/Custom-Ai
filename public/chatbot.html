@@ -211,7 +211,7 @@
     
             if (voice_text.length > 0) {
                 userInput = voice_text;
-                voice_text = ''; 
+                voice_text = '';   
             }
     
             var responseContainer = document.getElementById('response-container');
@@ -259,7 +259,7 @@
             } else {
                 console.error('Error: Empty or undefined response data.');
             }
-    
+            document.getElementById('user-input').value = " ";
             // Remove older messages if the count exceeds 10
             var messages = responseContainer.getElementsByClassName('message');
             if (messages.length > 10) {
@@ -267,8 +267,8 @@
             }
     
             // Clear user input
-            document.getElementById('user-input').value = '';
-    
+            document.getElementById('user-input').value = " ";
+           
             // Scroll to the bottom of the response container
             responseContainer.scrollTop = responseContainer.scrollHeight;
         } catch (error) {
@@ -278,9 +278,6 @@
     
     
 </script>
-
-
-
 
 </body>
 </html>
