@@ -347,6 +347,7 @@
      {
       window.location.href = '/musicplayer';
      }
+
     function speak(text) {
       const text_speak = new SpeechSynthesisUtterance(text);
       const voices = window.speechSynthesis.getVoices();
@@ -377,8 +378,7 @@
 
 
     
-    window.onload = function() {
-
+    window.onload = async function() {
       if (!localStorage.getItem('speechSpoken')) {
         speak("Initializing MARK 67 Version 3.5 Turbo ..");
         speak("Permission Authorized ");
@@ -386,32 +386,20 @@
         localStorage.setItem('speechSpoken', 'true'); // Set flag indicating speech has been spoken
       }
     
-    
- 
-  }
-
-
-  window.onload = async () =>
-  {
-
-    if(!localStorage.getItem("passcode"))
-    {
-      while(true)
-
-      {
-       const data =  prompt("Enter Security Code")
-  
-       if(data === "v-862002")
-  
-       {
-        localStorage.setItem("passcode", 1)
-        break
-       }
-    
+      if (!localStorage.getItem("passcode")) {
+        while (true) {
+          const data = prompt("Enter Security Code")
+          if (data === "v-862002") {
+            localStorage.setItem("passcode", 1)
+            break
+          }
+        }
       }
-    }
+    };
+    
+  
    
-  }
+  
   </script>
  
 </body>
