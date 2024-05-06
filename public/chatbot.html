@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
     <title> My AI Assistant </title>
 </head>
 
@@ -27,13 +30,13 @@
     }
     
     #input-container {
-      border-radius: 15px;
+       border-radius: 15px;
         display: flex;
         padding: 10px;
         border-top: 1px solid #ddd;
         position: fixed;
         bottom: 0;
-        width:92.5vw;
+        width:88%;
         background-color: #fff;
         z-index: 1; /* Ensure it's above the response container */
     }
@@ -116,10 +119,12 @@
     <div id="response-container"></div>
     <div id="input-container">
         <input type="text" id="user-input" placeholder="Type your message...">
-        <button id="send-button" onclick="sendMessage()">Send
-            <button id="stop-button">Stop</button>
-        </button>
-        <button id="voice-icon">Voice</button>
+        <button id="send-button" onclick="sendMessage()">  <i class="fas fa-arrow-up"></i></button>
+            <button id="stop-button"><i class="fas  fa-pause"></i></button>
+        
+        <button id="voice-icon"><i class="fas fa-microphone"></i></button>
+
+        
 
     </div>
 </div>
