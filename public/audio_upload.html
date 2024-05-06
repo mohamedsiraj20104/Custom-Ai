@@ -190,36 +190,49 @@
             }
         }
         
-        .notification {
+        .hs-toast-fixed-top {
             position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 10px;
-            background-color: #4CAF50;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hs-toast {
+            margin: 0 auto;
+            border-radius: .25rem;
+            box-shadow: 0 .2rem .5rem rgba(0,0,0,.2);
+            background: #5b7e96;
+            padding: .5rem .75rem;
+            max-width: 20rem;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .hs-toast-msg {
             color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            animation: slideIn 0.5s ease-out forwards, fadeOut 0.5s ease-in forwards 2.5s;
-            opacity: 0;
-            transform: translateX(100%);
+            line-height: 1.5rem;
+            padding-top: .2rem;
         }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(0);
-            }
+
+        .hs-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: white;
+            padding: .2rem .5rem;
+            cursor: pointer;
         }
-        
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-            }
+
+        .hs-theme-error {
+            background: #fe4a5d;
+        }
+
+        .hs-theme-success {
+            background: #00c18c;
         }
     </style>
 </head>
@@ -248,25 +261,49 @@
             </button>
         </form>
     </main>
-    <div id="notificationContainer"></div>
+    <div id="toastWrapper" class="hs-toast-fixed-top"></div>
 
     <script>
-        function showToast(message, type) {
-            const notificationContainer = document.getElementById('notificationContainer');
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            notificationContainer.appendChild(notification);
-        
-            // Hide the toast after 5 seconds
-            setTimeout(() => {
-                notification.style.opacity = "0";
-                setTimeout(() => {
-                    notification.remove();
-                }, 9000); // Fade out duration
-            }, 9000); // 5000 milliseconds = 5 seconds
+        function showToast(option) {
+            var toastWrapper = document.getElementById('toastWrapper');
+
+            var toast = document.createElement('div');
+            toast.className = 'hs-toast hs-theme-' + option.theme;
+
+            var toastMsg = document.createElement('div');
+            toastMsg.className = 'hs-toast-msg';
+            toastMsg.textContent = option.msg;
+
+            var closeButton = document.createElement('span');
+            closeButton.className = 'hs-close';
+            closeButton.innerHTML = '&times;';
+
+            toast.appendChild(toastMsg);
+            toast.appendChild(closeButton);
+            toastWrapper.appendChild(toast);
+
+            closeButton.addEventListener('click', function () {
+                toast.remove();
+            });
+
+            if (option.autoClose) {
+                setTimeout(function () {
+                    toast.style.marginTop = '-50px';
+                    toast.style.opacity = '0';
+                    setTimeout(function () {
+                        toast.remove();
+                        if (option.afterClose) {
+                            option.afterClose();
+                        }
+                    }, 500);
+                }, option.autoCloseTime || 3500);
+            }
+
+            if (option.afterShow) {
+                option.afterShow();
+            }
         }
-        
+
         document.getElementById('uploadForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -292,10 +329,16 @@
                 }
 
                 console.log('Cloudinary URLs:', data);
-                showToast('Upload successful! Cloudinary URLs stored in database.', 'success');
+                showToast({
+                    msg: 'Upload successful! Cloudinary URLs stored in database.',
+                    theme: 'success'
+                });
             } catch (error) {
                 console.error('Upload failed:', error);
-                showToast('Upload failed. ' + error.message, 'error');
+                showToast({
+                    msg: 'Upload failed. ' + error.message,
+                    theme: 'error'
+                });
             }
         });
     </script>
