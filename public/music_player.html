@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Audio Player</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome CDN link -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+   <!-- Google Fonts link -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&family=Oswald:wght@200..700&family=Sedan+SC&display=swap');
+    body {
+      
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://img.freepik.com/free-vector/gradient-blur-pink-blue-abstract-background_53876-117324.jpg?w=740&t=st=1714974764~exp=1714975364~hmac=43b0ef24d542bc2936ddc24ca2adeee487eafa4578fb5e853e667155afe15c1f'); 
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      font-weight: 400;
+      font-style: normal;
+    }
+    
+    .audio-card {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      padding: 20px;
+      width: 300px;
+      height: 300px; /* Updated height */
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      background-color: #fff;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    
+    .audio-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .audio-card h2 {
+      margin-bottom: 10px;
+      text-decoration: underline;
+      text-underline-offset: 6px;
+      color: #333;
+      font-family: "Jaro", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-size: 1.5rem; /* Adjust font size */
+    }
+    
+    .audio-card img {
+      width: 100%;
+      height: 200px; /* Updated height */
+      border-radius: 5px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    .audio-card button {
+      padding: 10px 20px;
+      background-color: #6c5ce7;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .audio-card button:hover {
+      background-color: #4834d4;
+    }
+    
+    .play-icon {
+      margin-right: 5px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container"></div>
+  <script >
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/audios');
+        const data = await response.json();
+        renderAudioCards(data);
+      } catch (error) {
+        console.error('Error fetching audio data:', error);
+      }
+    });
+    
+    function renderAudioCards(audioList) {
+      const container = document.querySelector('.container');
+    
+      audioList.forEach((audio, index) => {
+        const card = document.createElement('div');
+        card.classList.add('audio-card');
+    
+        const title = document.createElement('h2');
+        title.textContent = audio.songName;
+    
+        const image = document.createElement('img');
+        image.src = audio.imageURL;
+        image.alt = audio.songName;
+    
+        const audioElement = document.createElement('audio');
+        audioElement.src = audio.audioURL;
+        audioElement.id = `audio${index}`;
+    
+        const playButton = document.createElement('button');
+        playButton.innerHTML = '<i class="fas fa-play play-icon"></i> Play'; // Add play icon using Font Awesome
+        playButton.classList.add('play-button');
+    
+        playButton.addEventListener('click', () => {
+          const audio = document.querySelector(`#audio${index}`);
+          if (audio.paused) {
+            audio.play();
+            playButton.innerHTML = '<i class="fas fa-pause play-icon"></i> Pause'; // Update icon
+          } else {
+            audio.pause();
+            playButton.innerHTML = '<i class="fas fa-play play-icon"></i> Play'; // Update icon
+          }
+        });
+    
+        card.appendChild(title);
+        card.appendChild(image);
+        card.appendChild(audioElement);
+        card.appendChild(playButton);
+    
+        container.appendChild(card);
+      });
+    }
+    
+  </script>
+</body>
+</html>

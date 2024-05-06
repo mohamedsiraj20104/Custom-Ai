@@ -257,11 +257,21 @@
         <figcaption> ChatBot AI</figcaption>
   
       </figure>
+      
       <figure class="card" id="todo" onclick="redirectToMusicSpot()">
   
-        <img src="https://images.rawpixel.com/image_500/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvdjExNDEtNDEtbi1reWpoeHVtaS5qcGc.jpg" />
+        <img src="https://images.rawpixel.com/image_500/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA5L2thdGV2NjQ0N19hYnN0cmFjdF9zb3VuZF93YXZlLV92b2ljZV9kaWdpdGFsX3dhdmVmb3JtX3ZvbHVtZV92b181MDgxMGFmYS0yNjNkLTQxNWItOGNjNS0yMDFhNTdkNDFjYWFfMS5qcGc.jpg" />
   
         <figcaption>Music Spot </figcaption>
+  
+      </figure>
+     
+
+      <figure class="card" id="todo" onclick="redirectToMusicPlayer()">
+  
+        <img src="https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTA0L3Jhd3BpeGVsb2ZmaWNlMTRfc2ltcGxlX2xpbmVfbmVvbl9vZl9tdXNpY19pY29uX2luX3RoZV9zdHlsZV9vZl9mOGQ4MTBmOC0wYmE5LTQzYTMtODU2NC1kNTQ3YjliZDVkZDMuanBn.jpg" />
+  
+        <figcaption>Music Player </figcaption>
   
       </figure>
      
@@ -331,6 +341,11 @@
      function redirectToMusicSpot()
      {
       window.location.href = '/musicspot';
+     }
+
+     function redirectToMusicPlayer()
+     {
+      window.location.href = '/musicplayer';
      }
     function speak(text) {
       const text_speak = new SpeechSynthesisUtterance(text);
