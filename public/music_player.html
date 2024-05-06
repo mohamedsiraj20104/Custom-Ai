@@ -108,8 +108,13 @@
         const card = document.createElement('div');
         card.classList.add('audio-card');
     
+        let truncatedName = audio.songName;
+        if (audio.songName.length > 15) {
+          truncatedName = audio.songName.substring(0, 12) + '...';
+        }
+    
         const title = document.createElement('h2');
-        title.textContent = `🎵___${audio.songName}___✨`;
+        title.textContent = `🎵 ${truncatedName} ✨`;
     
         const image = document.createElement('img');
         image.src = audio.imageURL;
@@ -120,17 +125,17 @@
         audioElement.id = `audio${index}`;
     
         const playButton = document.createElement('button');
-        playButton.innerHTML = '<i class="fas fa-play play-icon"></i> Play'; // Add play icon using Font Awesome
+        playButton.innerHTML = '<i class="fas fa-play play-icon"></i> Play';
         playButton.classList.add('play-button');
     
         playButton.addEventListener('click', () => {
           const audio = document.querySelector(`#audio${index}`);
           if (audio.paused) {
             audio.play();
-            playButton.innerHTML = '<i class="fas fa-pause play-icon"></i> Pause'; // Update icon
+            playButton.innerHTML = '<i class="fas fa-pause play-icon"></i> Pause';
           } else {
             audio.pause();
-            playButton.innerHTML = '<i class="fas fa-play play-icon"></i> Play'; // Update icon
+            playButton.innerHTML = '<i class="fas fa-play play-icon"></i> Play';
           }
         });
     
@@ -142,6 +147,9 @@
         container.appendChild(card);
       });
     }
+    
+    
+    
     
   </script>
 </body>
